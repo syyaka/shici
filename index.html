@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+  <meta name="theme-color" content="#f3eee3">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="拾词">
+  <title>拾词 · 拍下生词，收进词库</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <svg class="sprite" aria-hidden="true">
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8.5h2.4l1.5-2.2h8.2l1.5 2.2H20a1.6 1.6 0 0 1 1.6 1.6v7.4A1.6 1.6 0 0 1 20 19.1H4a1.6 1.6 0 0 1-1.6-1.6v-7.4A1.6 1.6 0 0 1 4 8.5Z"/><circle cx="12" cy="13.5" r="3.2"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.2c2.7-.7 5.4-.4 8 1.1v13c-2.6-1.5-5.3-1.8-8-1.1v-13ZM20 5.2c-2.7-.7-5.4-.4-8 1.1v13c2.6-1.5 5.3-1.8 8-1.1v-13Z"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3A1.7 1.7 0 0 0 10 3v-.2h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.2 4.2"/></symbol>
+    <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 9.5v5h3.4l4.1 3.5V6L7.4 9.5H4Z"/><path d="M15.5 8.8a4.6 4.6 0 0 1 0 6.4M18.2 6a8.4 8.4 0 0 1 0 12"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.3 4.3L19 7"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 17 4.5-4.2 3.2 2.8 2.3-2.2 4 3.6"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 2.5c.5 4.8 2.4 7 7.5 7.5-5.1.5-7 2.7-7.5 7.5-.5-4.8-2.4-7-7.5-7.5 5.1-.5 7-2.7 7.5-7.5Z"/><path d="M19 16.5c.2 1.9 1 2.7 2.8 2.9-1.8.2-2.6 1-2.8 2.9-.2-1.9-1-2.7-2.8-2.9 1.8-.2 2.6-1 2.8-2.9Z"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 7h15M9 7V4.8h6V7M6.5 7l.8 12.2h9.4L17.5 7M10 10.5v5M14 10.5v5"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="m4 20 4.2-1 10.4-10.4-3.2-3.2L5 15.8 4 20ZM14 6.8l3.2 3.2"/></symbol>
+    <symbol id="i-fire" viewBox="0 0 24 24"><path d="M12.2 2.8c.5 3.3-.9 4.8-2.5 6.3-1.4 1.3-2.8 2.7-2.8 5.2a5.1 5.1 0 0 0 10.2 0c0-2.3-1-3.9-2.2-5.4-.3 1.2-.8 2-1.8 2.7.3-3.4-.3-6.1-2.9-8.8Z"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3.5h7l5 5v12H6v-17Z"/><path d="M13 3.5v5h5M9 13h6M9 16.5h4"/></symbol>
+    <symbol id="i-note" viewBox="0 0 24 24"><path d="M5 4.5h14v15H5z"/><path d="M8.5 8.5h7M8.5 12h7M8.5 15.5h4.5"/></symbol>
+  </svg>
+
+  <div class="app" id="app">
+    <section class="screen is-active" id="screen-today" data-screen="today">
+      <div class="today-layout">
+        <div class="today-main">
+          <header class="home-head">
+            <div class="brand">
+              <span class="brand-mark">拾</span>
+              <span class="brand-text">
+                <b>拾词</b>
+                <small>PICK UP A WORD</small>
+              </span>
+            </div>
+            <button class="icon-btn" id="btn-settings" aria-label="设置">
+              <svg><use href="#i-settings"/></svg>
+            </button>
+          </header>
+
+          <div class="date-row">
+            <span id="today-date">10月18日 · 星期六</span>
+            <span class="streak"><svg><use href="#i-fire"/></svg>连续 <b id="streak-days">0</b> 天</span>
+          </div>
+
+          <h1 class="hero-title">今天，再收<br><em id="today-remain">10</em> 个词。</h1>
+          <p class="hero-note" id="hero-note">把零碎时间，变成你的词汇量。</p>
+
+          <article class="today-card">
+            <div class="today-top">
+              <div>
+                <p class="eyebrow">今日学习</p>
+                <p class="today-count"><b id="today-done">0</b><span>/ <i id="today-goal">10</i></span></p>
+              </div>
+              <div class="ring" id="today-ring" style="--p:0">
+                <span><b id="ring-pct">0</b>%</span>
+              </div>
+            </div>
+            <div class="today-meta">
+              <span><i class="dot dot-coral"></i>待复习 <b id="due-count">0</b></span>
+              <span><i class="dot dot-mint"></i>新词 <b id="new-count">0</b></span>
+            </div>
+            <div class="review-layout-row">
+              <span>复习方式</span>
+              <button class="layout-chip is-active" data-layout="random">随机</button>
+              <button class="layout-chip" data-layout="meaning">近义</button>
+              <button class="layout-chip" data-layout="spelling">形近</button>
+            </div>
+            <div class="today-actions">
+              <button class="btn btn-light btn-main" id="btn-review">
+                <span id="review-label">开始复习</span>
+                <svg><use href="#i-arrow"/></svg>
+              </button>
+              <button class="btn btn-ghost-light" id="btn-quick-capture" aria-label="拍照识词">
+                <svg><use href="#i-camera"/></svg>
+              </button>
+            </div>
+            <svg class="card-orbit" viewBox="0 0 220 220" aria-hidden="true"><circle cx="110" cy="110" r="82"/><circle cx="110" cy="110" r="108"/></svg>
+          </article>
+
+          <button class="capture-promo" id="btn-promo-capture">
+            <span class="promo-icon"><svg><use href="#i-camera"/></svg></span>
+            <span class="promo-text">
+              <b>拍一张，生词自己跳出来</b>
+              <small>课本、菜单、路牌，都能变成你的词库</small>
+            </span>
+            <span class="promo-go"><svg><use href="#i-chevron"/></svg></span>
+          </button>
+        </div>
+
+        <aside class="today-side">
+          <section class="section recent-section">
+            <div class="section-head">
+              <h2>最近收录</h2>
+              <button class="text-btn" data-go="library">全部词库 <svg><use href="#i-chevron"/></svg></button>
+            </div>
+            <div class="recent-list" id="recent-list"></div>
+          </section>
+
+          <section class="section progress-section">
+            <div class="section-head"><h2>你的小进步</h2></div>
+            <div class="stat-grid">
+              <div class="stat"><b id="stat-total">0</b><small>词库单词</small></div>
+              <div class="stat"><b id="stat-mastered">0</b><small>已经掌握</small></div>
+              <div class="stat"><b id="stat-days">0</b><small>学习天数</small></div>
+            </div>
+          </section>
+          <p class="footnote">从一个词开始，慢慢来。</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-notes" data-screen="notes">
+      <header class="page-head notes-head">
+        <div>
+          <p class="page-kicker">CLASS NOTES</p>
+          <h1>课堂笔记</h1>
+        </div>
+        <div class="library-actions">
+          <button class="batch-toggle" id="btn-note-history">历史</button>
+          <button class="round-add" id="btn-new-note" aria-label="新建笔记"><svg><use href="#i-plus"/></svg></button>
+        </div>
+      </header>
+      <p class="page-sub">上课时随手记下单词、句子或老师的例子，生词会自动收进词库。</p>
+      <div class="note-tabs" id="note-tabs"></div>
+
+      <div class="notes-layout">
+        <div class="note-editor-card">
+          <div class="note-editor-head">
+            <span id="note-date">今天</span>
+            <span class="note-save" id="note-save">已保存</span>
+          </div>
+          <textarea class="note-input" id="note-input" placeholder="上课时随手记下单词、句子或老师的例子……&#10;&#10;例如：The teacher explained the subtle difference between resilience and perseverance."></textarea>
+        </div>
+
+        <aside class="note-words-card">
+          <div class="note-words-head">
+            <div>
+              <p class="page-kicker">WORDS FROM NOTES</p>
+              <h2>笔记里的单词</h2>
+            </div>
+            <span class="note-count" id="note-count">0</span>
+          </div>
+          <p class="note-auto" id="note-auto">写下的生词会自动收进词库。</p>
+          <div class="note-word-list" id="note-word-list"></div>
+          <div class="note-word-empty" id="note-word-empty">在左边记下一些英文，单词会自动出现在这里。</div>
+          <button class="btn btn-primary btn-wide" id="btn-note-collect" disabled>把待收词加入词库</button>
+        </aside>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-capture" data-screen="capture">
+      <header class="page-head">
+        <div>
+          <p class="page-kicker">SCAN &amp; KEEP</p>
+          <h1>把生词拍下来</h1>
+        </div>
+        <button class="icon-btn" data-go="today" aria-label="关闭">
+          <svg><use href="#i-close"/></svg>
+        </button>
+      </header>
+      <p class="page-sub">对准一页书、一块菜单，拾词会把里面的英文单词挑出来。</p>
+
+      <div class="capture-layout">
+        <div class="capture-column">
+          <div class="capture-card" id="capture-card">
+            <div class="viewfinder" id="viewfinder">
+              <span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span>
+              <div class="scan-line"></div>
+              <div class="vf-inner">
+                <span class="vf-icon"><svg><use href="#i-camera"/></svg></span>
+                <b>对准要识别的文字</b>
+                <small>尽量光线充足、画面平整</small>
+              </div>
+            </div>
+            <div class="capture-preview" id="capture-preview" hidden>
+              <img id="preview-img" alt="待识别图片">
+              <div class="scan-overlay" id="scan-overlay">
+                <div class="scan-beam"></div>
+                <span class="scan-label" id="scan-label">正在读懂画面…</span>
+              </div>
+              <button class="preview-reset" id="btn-reset-photo">换一张</button>
+            </div>
+            <div class="file-summary" id="file-summary" hidden>
+              <span class="file-summary-icon"><svg><use href="#i-file"/></svg></span>
+              <b id="file-name">reading.pdf</b>
+              <small id="file-meta">PDF · 12 页</small>
+              <p id="file-status">已提取文字，正在挑词</p>
+              <button class="file-change" id="btn-change-file">换一个文件</button>
+            </div>
+          </div>
+
+          <div class="capture-buttons" id="capture-buttons">
+            <label class="btn btn-primary btn-camera">
+              <svg><use href="#i-camera"/></svg>
+              拍一张
+              <input type="file" id="file-camera" accept="image/*" capture="environment" hidden>
+            </label>
+            <label class="btn btn-soft">
+              <svg><use href="#i-image"/></svg>
+              从相册选
+              <input type="file" id="file-gallery" accept="image/*" hidden>
+            </label>
+            <label class="btn btn-soft">
+              <svg><use href="#i-file"/></svg>
+              导入文件
+              <input type="file" id="file-document" accept=".txt,.md,.csv,.json,.srt,.log,application/pdf,text/plain" hidden>
+            </label>
+          </div>
+          <button class="manual-link" id="btn-clipboard">
+            <svg><use href="#i-copy"/></svg> 从剪贴板导入单词
+          </button>
+          <button class="manual-link" id="btn-manual-from-capture">
+            <svg><use href="#i-edit"/></svg> 没有照片？手动输入一个词
+          </button>
+          <button class="sample-link" id="btn-sample">
+            没有课本？用示例照片试一下
+            <svg><use href="#i-arrow"/></svg>
+          </button>
+        </div>
+
+        <div class="capture-side">
+          <aside class="capture-aside" id="capture-aside">
+            <p class="page-kicker">SCAN NOTES</p>
+            <h2>拍清楚的三件事</h2>
+            <ol class="scan-tips">
+              <li><b>01</b><span>让文字占满画面，尽量平整</span></li>
+              <li><b>02</b><span>避开反光和阴影</span></li>
+              <li><b>03</b><span>一次拍一页，识别更准</span></li>
+            </ol>
+            <div class="aside-note"><svg><use href="#i-sparkle"/></svg><span>识别在本机完成，照片不会上传。</span></div>
+          </aside>
+
+          <section class="ocr-section" id="ocr-section" hidden>
+            <div class="ocr-head">
+              <div>
+                <h2 id="ocr-title">识别结果</h2>
+                <p id="ocr-sub">勾选想收进词库的词</p>
+              </div>
+              <div class="ocr-tools">
+                <button class="mini-toggle is-on" id="btn-ocr-filter">只看生词</button>
+                <button class="text-btn" id="btn-select-all">全选</button>
+              </div>
+            </div>
+            <div class="ocr-list" id="ocr-list"></div>
+            <p class="ocr-empty" id="ocr-empty" hidden>这次没有找到合适的单词，换个角度再试试。</p>
+          </section>
+
+          <div class="tips-row">
+            <span><svg><use href="#i-sparkle"/></svg>离线识别</span>
+            <span>支持 PDF / TXT 导入</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-library" data-screen="library">
+      <header class="page-head library-head">
+        <div>
+          <p class="page-kicker">MY WORDS</p>
+          <h1>我的词库</h1>
+        </div>
+        <div class="library-actions">
+          <button class="batch-toggle" id="btn-batch-mode">选择</button>
+          <button class="round-add" id="btn-add-word" aria-label="手动添加单词"><svg><use href="#i-plus"/></svg></button>
+        </div>
+      </header>
+      <p class="page-sub"><b id="library-total">0</b> 个词，正在一点点变成你的。</p>
+
+      <div class="search-box">
+        <svg><use href="#i-search"/></svg>
+        <input id="search-input" type="search" placeholder="搜单词或中文释义" autocomplete="off">
+        <button class="search-clear" id="search-clear" hidden aria-label="清空搜索"><svg><use href="#i-close"/></svg></button>
+      </div>
+
+      <div class="filter-row" id="filter-row">
+        <button class="chip is-active" data-filter="all">全部</button>
+        <button class="chip" data-filter="due">待复习</button>
+        <button class="chip" data-filter="new">新词</button>
+        <button class="chip" data-filter="mastered">已掌握</button>
+      </div>
+
+      <div class="word-list" id="word-list"></div>
+      <div class="library-empty" id="library-empty" hidden>
+        <div class="empty-glyph">Aa</div>
+        <b>词库还是空的</b>
+        <p>去拍一段英文，把第一个词捡回来。</p>
+        <button class="btn btn-primary" data-go="capture">去拍照</button>
+      </div>
+    </section>
+  </div>
+
+  <nav class="tabbar" aria-label="主导航">
+    <div class="rail-brand">
+      <span class="brand-mark">拾</span>
+      <span class="brand-text"><b>拾词</b><small>PICK UP A WORD</small></span>
+    </div>
+    <button class="tab is-active" data-go="today">
+      <svg><use href="#i-sun"/></svg><span>今天</span>
+    </button>
+    <button class="tab" data-go="notes">
+      <svg><use href="#i-note"/></svg><span>笔记</span>
+    </button>
+    <button class="tab tab-camera" data-go="capture">
+      <span class="cam-bubble"><svg><use href="#i-camera"/></svg></span><span>识词</span>
+    </button>
+    <button class="tab" data-go="library">
+      <svg><use href="#i-book"/></svg><span>词库</span>
+    </button>
+    <div class="rail-foot">
+      <button class="rail-settings" data-settings aria-label="设置"><svg><use href="#i-settings"/></svg><span>设置</span></button>
+      <small>离线识别 · 本机存储</small>
+    </div>
+  </nav>
+
+  <div class="overlay review-overlay" id="review-overlay" hidden>
+    <div class="review-top">
+      <button class="icon-btn light" id="btn-close-review" aria-label="结束复习"><svg><use href="#i-close"/></svg></button>
+      <div class="review-progress"><i id="review-progress-bar"></i></div>
+      <span class="review-counter" id="review-counter">1 / 5</span>
+    </div>
+    <div class="review-body" id="review-body">
+      <div class="review-modes" id="review-modes">
+        <button data-mode="recall" class="is-active">回忆</button>
+        <button data-mode="spell">拼写</button>
+        <button data-mode="write">默写</button>
+      </div>
+      <div class="review-group" id="review-group" hidden>
+        <span class="review-group-label" id="review-group-label"></span>
+        <span class="review-group-words" id="review-group-words"></span>
+      </div>
+      <p class="review-kicker" id="review-kicker">看单词，想意思</p>
+      <div class="flashcard" id="flashcard">
+        <div class="flash-front">
+          <span class="flash-tag" id="flash-tag">待复习</span>
+          <h2 id="flash-word">resilient</h2>
+          <p class="flash-phone" id="flash-phone">/rɪˈzɪliənt/</p>
+          <button class="sound-btn" id="btn-flash-sound"><svg><use href="#i-sound"/></svg></button>
+          <p class="flash-hint">轻点卡片，查看释义</p>
+        </div>
+        <div class="flash-back">
+          <p class="flash-back-label">释义</p>
+          <h2 id="flash-word-back">resilient</h2>
+          <p class="flash-trans" id="flash-trans"></p>
+          <p class="flash-phone small" id="flash-phone-back"></p>
+          <button class="sound-btn small" id="btn-flash-sound-back"><svg><use href="#i-sound"/></svg></button>
+          <button class="review-extra-btn" id="btn-flash-extra">例句 · 派生词</button>
+        </div>
+      </div>
+      <p class="reveal-tip" id="reveal-tip">想好了吗？轻点卡片揭晓答案</p>
+      <div class="rate-row" id="rate-row" hidden>
+        <button class="rate rate-again" data-rate="again"><b>不认识</b><small>10 分钟后再见</small></button>
+        <button class="rate rate-hard" data-rate="hard"><b>有点印象</b><small>明天再复习</small></button>
+        <button class="rate rate-good" data-rate="good"><b>认识</b><small>拉长复习间隔</small></button>
+      </div>
+
+      <section class="practice-panel spell-panel" id="spell-panel" hidden>
+        <p class="practice-trans" id="spell-trans"></p>
+        <div class="practice-audio">
+          <button class="sound-btn" id="spell-sound" aria-label="播放发音"><svg><use href="#i-sound"/></svg></button>
+          <span>听发音</span>
+        </div>
+        <input class="spell-input" id="spell-input" type="text" inputmode="text" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="输入英文单词">
+        <p class="practice-hint" id="spell-hint"></p>
+        <div class="spell-feedback" id="spell-feedback" hidden></div>
+        <div class="practice-actions" id="spell-actions">
+          <button class="btn btn-soft" id="spell-hint-btn">提示首字母</button>
+          <button class="btn btn-primary" id="spell-check">检查拼写</button>
+        </div>
+        <div class="practice-actions" id="spell-after" hidden>
+          <button class="btn btn-soft" id="spell-retry">再试一次</button>
+          <button class="btn btn-primary" id="spell-next">下一个</button>
+        </div>
+      </section>
+
+      <section class="practice-panel write-panel" id="write-panel" hidden>
+        <div class="write-prompt">
+          <div>
+            <p class="practice-trans" id="write-trans"></p>
+          </div>
+          <button class="sound-btn" id="write-sound" aria-label="再听一遍"><svg><use href="#i-sound"/></svg></button>
+        </div>
+        <div class="writing-board" id="writing-board">
+          <canvas id="write-canvas"></canvas>
+          <span class="writing-placeholder" id="writing-placeholder">用 Apple Pencil 或手指在这里默写</span>
+        </div>
+        <div class="writing-tools">
+          <button class="writing-tool is-active" data-tool="pen">笔</button>
+          <button class="writing-tool" data-tool="eraser">橡皮</button>
+          <span class="tool-sep"></span>
+          <button id="write-undo">撤销</button>
+          <button id="write-clear">清空</button>
+        </div>
+        <p class="practice-hint" id="write-hint">写完后点「对答案」，对照着检查</p>
+        <div class="write-answer" id="write-answer" hidden>
+          <p>正确答案</p>
+          <h3 id="write-answer-word"></h3>
+          <span id="write-answer-phone"></span>
+        </div>
+        <div class="practice-actions" id="write-actions">
+          <button class="btn btn-primary btn-wide" id="write-reveal">对答案</button>
+        </div>
+        <div class="practice-actions" id="write-grade" hidden>
+          <button class="btn btn-soft" id="write-wrong">没写对</button>
+          <button class="btn btn-primary" id="write-right">写对了</button>
+        </div>
+      </section>
+      <p class="review-foot">慢一点，也是在向前。</p>
+    </div>
+    <div class="review-done" id="review-done" hidden>
+      <div class="done-mark"><svg><use href="#i-check"/></svg></div>
+      <p class="page-kicker">NICE WORK</p>
+      <h2>这一轮，收好了。</h2>
+      <p id="done-sub">你复习了 5 个单词。</p>
+      <div class="done-stats">
+        <div><b id="done-good">0</b><small>认识</small></div>
+        <div><b id="done-hard">0</b><small>模糊</small></div>
+        <div><b id="done-again">0</b><small>不认识</small></div>
+      </div>
+      <button class="btn btn-light btn-wide" id="btn-done-review">回到今天</button>
+    </div>
+  </div>
+
+  <div class="sheet-backdrop" id="sheet-backdrop" hidden>
+    <div class="sheet" id="sheet" role="dialog" aria-modal="true">
+      <div class="sheet-handle"></div>
+      <div id="sheet-content"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="vendor/tesseract.min.js"></script>
+  <script src="vendor/pdf/pdf.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

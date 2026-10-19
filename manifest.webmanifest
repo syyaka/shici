@@ -1,0 +1,26 @@
+{
+  "name": "拾词 · 拍照识词",
+  "short_name": "拾词",
+  "description": "拍下课本或菜单，把生词收进自己的词库，按节奏复习。",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f4efe5",
+  "theme_color": "#f4efe5",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
